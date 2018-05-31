@@ -15,4 +15,4 @@ From now on you can start the server
 # node server
 If you see a boat that sails on your terminal then you are good with your back end server. To check that you receive the json file from the back end you can test it by accessing the http://localhost:1337/restaurants address in you browser. You should get a list of restaurants objects in an array. In case you have an empty array or a page not found error check the steps before.
 
-Now you can search the restaurants you like.
+Now you can search your favorite restaurant.
