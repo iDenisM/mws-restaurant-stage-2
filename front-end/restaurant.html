@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Normalize.css for better cross-browser consistency -->
+  <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+  <!-- Main CSS file -->
+  <link rel="stylesheet" href="css/main.css" type="text/css">
+  <title>Restaurant Info</title>
+</head>
+
+<body class="inside">
+  <!-- Beginning header -->
+  <header>
+    <!-- Beginning nav -->
+    <nav>
+      <h1><a href="/">Restaurant Reviews</a></h1>
+    </nav>
+    <a href="#restaurant-container" class="skip-link">Skip to the restaurant details</a>
+    <a href="#reviews-container" class="skip-link">Skip to the restaurant reviews</a>
+    <!-- Beginning breadcrumb -->
+    <ul id="breadcrumb" >
+      <li><a href="/">Home</a></li>
+    </ul>
+    <!-- End breadcrumb -->
+    <!-- End nav -->
+  </header>
+  <!-- End header -->
+
+  <!-- Beginning main -->
+  <main id="maincontent">
+    <!-- Beginning map -->
+    <section id="map-container" role="application">
+      <div tabindex="-1" id="map" area-label="Map"></div>
+    </section>
+    <!-- End map -->
+    <!-- Beginning restaurant -->
+    <section id="restaurant-container" aria-label="Restaurant Details" aria-describedby="restaurant-name">
+      <h2 tabindex="0" id="restaurant-name"></h2>
+      <img tabindex="0" id="restaurant-img">
+      <p tabindex="0" id="restaurant-cuisine" area-label="Cuisine"></p>
+      <p tabindex="0" id="restaurant-address" area-label="Address"></p>
+      <!-- <div id="restaurant-hours"
+        tabindex="0"
+        role="tablist"
+        aria-label="Hours"
+      ></div> -->
+      <label>
+        <table id="restaurant-hours"
+        tabindex="0"
+        aria-label="Opening Times"
+        ></table>
+      </label>
+    </section>
+    <!-- end restaurant -->
+    <!-- Beginning reviews -->
+    <section id="reviews-container" aria-describedby="reviews-list">
+      <ul tabindex="0" id="reviews-list" area-label="Reviews" role="<list></list>"></ul>
+    </section>
+    <!-- End reviews -->
+  </main>
+  <!-- End main -->
+
+  <!-- Beginning footer -->
+  <footer id="footer">
+    Copyright (c) 2017 <a href="/" role="link"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+  </footer>
+  <!-- End footer -->
+
+  <!-- Beginning scripts -->
+  <!-- Database helpers -->
+  <script type="text/javascript" src="js/dbhelper.js"></script>
+  <!-- Main javascript file -->
+  <script type="text/javascript" src="js/restaurant_info.js"></script>
+  <!-- Google Maps -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrnSxn8yZfN5hs5ii5Q56D21RA6XJ9ldI&libraries=places&callback=initMap"></script>
+  <!-- Service Worker -->
+  <script type="application/javascript" charset="utf-8" src="sw.js"></script>
+  <!-- End scripts -->
+
+</body>
+
+</html>
