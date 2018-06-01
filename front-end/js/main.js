@@ -1,16 +1,38 @@
 let restaurants,
-  neighborhoods,
-  cuisines
-var map
-var markers = []
+    neighborhoods,
+    cuisines,
+    map,
+    markers = []
+const database_url = 'http://localhost:1337/restaurants'
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-  fetchNeighborhoods();
-  fetchCuisines();
+  DBHelper.openDatabase()
+  DBHelper.fetchRestaurants()
+  // fetchNeighborhoods();
+  // fetchCuisines();
 });
+
+fetchRestaurants = () => {
+  fetch(database_url)
+    .then(response => response.json())
+    // .then(rests => openDatabase(rests))
+    .catch(error => console.log('Fetch failed', error))
+}
+
+fillDatabase = (restaurants) => {
+  openDatabase().then((db) => {
+    if(!db) return
+
+    let tx = db.transaction('restaurants', 'readwrite')
+    let store = tx.objectStore('restaurants')
+    restaurants.forEach((restaurant) => {
+      store.put(restaurant)
+    })
+  })
+}
 
 /**
  * Fetch all neighborhoods and set their HTML.
