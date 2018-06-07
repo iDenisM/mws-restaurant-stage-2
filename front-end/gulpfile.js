@@ -1,39 +1,49 @@
-let gulp = require('gulp'),
-    babel = require('gulp-babel'),
-    concat = require('gulp-concat'),
-    uglify = require('gulp-uglify'),
-    rename = require('gulp-rename'),
-    cleanCSS = require('gulp-clean-css'),
-    del = require('del'),
-    autoprefixer = require('gulp-autoprefixer'),
-    sass = require('gulp-sass'),
-    imagemin = require('gulp-imagemin');
+const gulp = require('gulp');
+const babel = require('gulp-babel');
+const runSequence = require('run-sequence');
+const browserify = require('gulp-browserify');
+const uglify = require('gulp-uglify');
+const minify = require('gulp-minify');
 
-let paths = {
-  styles: {
-    src: 'dev/css/**/*.css',
-    dest: 'dist/css/'
-  },
-  scripts: {
-    src: 'dev/js/**/*.js',
-    dest: 'dist/js/'
-  }
-};
-
-// gulp.task('build', build);
-
-gulp.task('sass', function () {
-  return gulp.src('./sass/**/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(autoprefixer('last 2 versions'))
-    .pipe(gulp.dest('./css'));
+//transpiling for idb promised library
+gulp.task('idbController', function() {
+  gulp.src('dev/js/idbController.js')
+    .pipe(babel({
+      presets: ["es2015"]
+    }))
+    .pipe(browserify())
+    // .pipe(uglify())
+    .pipe(gulp.dest('./js'));
 });
 
-gulp.task('sass:watch', function () {
-  gulp.watch('./sass/**/*.scss', ['sass']);
+gulp.task('dbhelper', function() {
+  gulp.src('dev/js/dbhelper.js')
+    .pipe(babel({
+      presets: ["env"]
+    }))
+    // .pipe(uglify())
+    .pipe(gulp.dest('./js'));
 });
 
-/*
- * Define default task that can be called by just running `gulp` from cli
- */
-// gulp.task('default', build);
+gulp.task('main', function (cb) {
+  gulp.src('dev/js/main.js')
+    // .pipe(minify({
+    //   ext:{
+    //     src: '-debug.js',
+    //     min: '.js'
+    //   }
+    // }))
+    .pipe(gulp.dest('./js'));
+});
+
+gulp.task('jsBundle', (cb) => {
+  runSequence('idbController', 'dbhelper', 'main', cb);
+})
+
+gulp.task('watch:jsBundle', function () {
+  gulp.watch('./dev/js/**/*.js', ['jsBundle']);
+});
+
+gulp.task('default', function(callback) {
+  runSequence('idbController', 'dbhelper', 'main', callback);
+});
