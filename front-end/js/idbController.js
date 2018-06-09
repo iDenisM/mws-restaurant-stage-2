@@ -11,17 +11,49 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var IDB = function () {
-  function IDB() {
-    _classCallCheck(this, IDB);
+var IndexDBhelp = function () {
+  function IndexDBhelp() {
+    _classCallCheck(this, IndexDBhelp);
   }
 
-  _createClass(IDB, null, [{
-    key: 'dbPromis',
+  _createClass(IndexDBhelp, null, [{
+    key: 'test',
+    value: function test() {
+      return console.log('Hello');
+    }
+    /**
+     * Database URL.
+     * Change this to restaurants.json file location on your server.
+     */
+
+  }, {
+    key: 'fetchRestaurants',
+
+
+    /**
+     * Fetch all restaurants.
+     */
+    value: function fetchRestaurants() {
+      var _this = this;
+
+      fetch(this.DATABASE_URL).then(function (response) {
+        return response.json();
+      }).then(function (restaurants) {
+        // Fill the idb with data from fetch
+        console.log('Filling the idb with data');
+        // IDB.dbPromis()
+        _this.addDataToIDB(restaurants);
+      }).catch(function (error) {
+        return console.log('Fetch failed', error);
+      });
+    }
 
     /**
      * Open the DataBase
      */
+
+  }, {
+    key: 'dbPromis',
     value: function dbPromis() {
       return _idb2.default.open('restaurants', 1, function (upgradeDb) {
         // Create the database
@@ -49,25 +81,19 @@ var IDB = function () {
         data.forEach(function (restaurant) {
           store.put(restaurant);
         });
+        console.log('Populate db');
       });
+    }
+  }, {
+    key: 'DATABASE_URL',
+    get: function get() {
+      var port = 1337; // Change this to your server port
+      return 'http://localhost:' + port + '/restaurants';
     }
   }]);
 
-  return IDB;
+  return IndexDBhelp;
 }();
-
-// let fillDatabase = (data) => {
-//   dbPromise.then((db) => {
-//     if (!db) return
-//
-//     // Add data to the database
-//     let tx = db.transaction('restaurants', 'readwrite')
-//     let store = tx.objectStore('restaurants')
-//     data.forEach((restaurant) => {
-//       store.put(restaurant)
-//     })
-//   })
-// }
 },{"idb":2}],2:[function(require,module,exports){
 'use strict';
 

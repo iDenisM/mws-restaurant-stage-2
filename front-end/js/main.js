@@ -10,10 +10,15 @@ const database_url = 'http://localhost:1337/restaurants'
  */
 document.addEventListener('DOMContentLoaded', (event) => {
   // DBHelper.openDatabase()
-  DBHelper.fetchRestaurants()
+  fetchAllRestaurants();
   fetchNeighborhoods();
   fetchCuisines();
+
 });
+
+fetchAllRestaurants = () => {
+  idbController.fetchRestaurants()
+}
 
 /**
  * Fetch all neighborhoods and set their HTML.
